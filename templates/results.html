@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerLens - Analysis Results</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 40px 20px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 17px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .score-card {
+            text-align: center;
+        }
+
+        .score {
+            font-size: 52px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .score-label {
+            color: #777;
+            font-size: 15px;
+        }
+
+        .job-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill {
+            background: #eef2f5;
+            padding: 9px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .matched {
+            background: #e8f5e9;
+        }
+
+        .missing {
+            background: #fff3e0;
+        }
+
+        .roles {
+            display: grid;
+            gap: 12px;
+        }
+
+        .role {
+            padding: 15px;
+            background: #f7f8fa;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .role-name {
+            font-weight: bold;
+        }
+
+        .role-score {
+            color: #555;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            padding: 13px 25px;
+            border-radius: 7px;
+        }
+
+        .button:hover {
+            background: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>CareerLens</h1>
+        <p>Resume Analysis Report</p>
+    </div>
+
+
+    <!-- Match Score -->
+
+    <div class="card score-card">
+
+        <div class="score-label">
+            OVERALL JOB MATCH
+        </div>
+
+        <div class="score">
+            {{ match_score }}
+        </div>
+
+        <div class="score-label">
+            Based on resume-to-job similarity
+        </div>
+
+    </div>
+
+
+    <!-- Best Career Match -->
+
+    <div class="card">
+
+        <div class="section-title">
+            Best Career Match
+        </div>
+
+        <div class="job-title">
+            {{ top_job }}
+        </div>
+
+    </div>
+
+
+    <!-- Extracted Skills -->
+
+    <div class="card">
+
+        <div class="section-title">
+            Skills Detected in Your Resume
+        </div>
+
+        <div class="skills">
+
+            {% for skill in extracted_skills %}
+                <span class="skill">
+                    {{ skill }}
+                </span>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Matched Skills -->
+
+    <div class="card">
+
+        <div class="section-title">
+            Skills Matching the Target Role
+        </div>
+
+        <div class="skills">
+
+            {% for skill in matched_skills %}
+                <span class="skill matched">
+                    {{ skill }}
+                </span>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Missing Skills -->
+
+    <div class="card">
+
+        <div class="section-title">
+            Skills You Should Develop
+        </div>
+
+        <div class="skills">
+
+            {% for skill in missing_skills %}
+                <span class="skill missing">
+                    {{ skill }}
+                </span>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Recommended Roles -->
+
+    <div class="card">
+
+        <div class="section-title">
+            Recommended Career Roles
+        </div>
+
+        <div class="roles">
+
+            {% for job in top_matches %}
+
+                <div class="role">
+
+                    <span class="role-name">
+                        {{ job.title }}
+                    </span>
+
+                    <span class="role-score">
+                        {{ job.score }}%
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <div class="card">
+        <h2>Personalized Learning Roadmap</h2>
+
+        {% if learning_roadmap %}
+            {% for skill, topics in learning_roadmap.items() %}
+                <div style="margin-bottom: 25px;">
+                    <h3>{{ skill|title }}</h3>
+
+                    <ol>
+                        {% for topic in topics %}
+                            <li>{{ topic }}</li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No additional skills required at the moment.</p>
+        {% endif %}
+    </div>
+    <div class="button-container">
+        <a href="/" class="button">
+            Analyze Another Resume
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
