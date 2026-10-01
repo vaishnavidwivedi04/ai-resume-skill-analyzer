@@ -4,6 +4,12 @@ An entry-level Data Analyst project that extracts technical skills from resume t
 recommends the best-fit job roles using **TF-IDF + Cosine Similarity**, and performs a
 **skill gap analysis** against the recommended role. The project ships with a Jupyter
 notebook for analysis and a lightweight Flask REST API for serving predictions.
+## 🚀 Live Demo
+
+[**Try CareerLens Live →**](https://ai-resume-skill-analyzer-w9fq.onrender.com)
+
+### 📊 Job Market Intelligence
+[View Job Market Intelligence →](https://ai-resume-skill-analyzer-w9fq.onrender.com/job-market)
 
 ## Project Overview
 
