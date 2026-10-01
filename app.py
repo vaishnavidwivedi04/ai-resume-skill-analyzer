@@ -15,6 +15,10 @@ from pypdf import PdfReader
 from docx import Document
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+import nltk
+
+nltk.download('stopwords')
+nltk.download('wordnet')
 from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
